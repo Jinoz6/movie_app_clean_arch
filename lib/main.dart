@@ -2,14 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:movie_app_clean_arch/data/core/api_client.dart';
 import 'package:movie_app_clean_arch/data/data_sources/movie_remote_data_source.dart';
+import 'package:movie_app_clean_arch/data/repositories/movie_repository_imple.dart';
+import 'package:movie_app_clean_arch/domain/repositories/movie_responsitory.dart';
 
 void main() {
   ApiClient apiClient = ApiClient(Client());
   MovieRemoteDataSource dataSource = MovieRemoteDataSourceImpl(apiClient);
-  dataSource.getTrending();
-  dataSource.getPopular();
-  dataSource.getComingSoon();
-  dataSource.getPlayingNow();
+  MovieReposity movieReposity = MovieRepositoryImpl(dataSource);
+
+  movieReposity.getTrending();
+  // dataSource.getTrending();
+  // dataSource.getPopular();
+  // dataSource.getComingSoon();
+  // dataSource.getPlayingNow();
   runApp(const MyApp());
 }
 
