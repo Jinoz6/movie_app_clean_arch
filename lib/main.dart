@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -6,17 +8,25 @@ import 'package:movie_app_clean_arch/data/data_sources/movie_remote_data_source.
 import 'package:movie_app_clean_arch/data/repositories/movie_repository_imple.dart';
 import 'package:movie_app_clean_arch/domain/entities/app_error.dart';
 import 'package:movie_app_clean_arch/domain/entities/movie_entity.dart';
+import 'package:movie_app_clean_arch/domain/entities/no_params.dart';
 import 'package:movie_app_clean_arch/domain/repositories/movie_responsitory.dart';
 import 'package:movie_app_clean_arch/domain/usecases/get_trending.dart';
+import 'package:pedantic/pedantic.dart';
+import 'di/get_it.dart' as getIt;
 
 void main() async {
-  ApiClient apiClient = ApiClient(Client());
-  MovieRemoteDataSource dataSource = MovieRemoteDataSourceImpl(apiClient);
-  MovieReposity movieReposity = MovieRepositoryImpl(dataSource);
-  GetTrending getTrending = GetTrending(movieReposity);
+  unawaited(getIt.init());
+
+  // ApiClient apiClient = ApiClient(Client());
+  // MovieRemoteDataSource dataSource = MovieRemoteDataSourceImpl(apiClient);
+  // MovieReposity movieReposity = MovieRepositoryImpl(dataSource);
+
+  // GetTrending getTrending = GetTrending(movieReposity);
+
+  GetTrending getTrending = getIt.getItInstance<GetTrending>();
 
   final Either<AppError, List<MovieEntity>> eitherResponse =
-      await getTrending();
+      await getTrending(NoParams());
 
   eitherResponse.fold((l) {
     print('error');

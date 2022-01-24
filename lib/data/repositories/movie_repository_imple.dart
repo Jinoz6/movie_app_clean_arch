@@ -22,4 +22,42 @@ class MovieRepositoryImpl extends MovieReposity {
       return Left(AppError('Something went wrong'));
     }
   }
+
+  @override
+  Future<Either<AppError, List<MovieEntity>>> getComingSoon() async{
+    // TODO: implement getComingSoon
+    
+
+     try {
+      final movies = await remoteDataSource.getComingSoon();
+
+      return Right(movies);
+    } on Exception {
+      return Left(AppError('Something went wrong'));
+    }
+  }
+
+  @override
+  Future<Either<AppError, List<MovieEntity>>> getPlayingNow() async{
+    // TODO: implement getPLayingNow
+    try {
+      final movies = await remoteDataSource.getPlayingNow();
+
+      return Right(movies);
+    } on Exception {
+      return Left(AppError('Something went wrong'));
+    }
+  }
+
+  @override
+  Future<Either<AppError, List<MovieEntity>>> getPopular() async{
+    // TODO: implement getPopular
+    try {
+      final movies = await remoteDataSource.getPopular();
+
+      return Right(movies);
+    } on Exception {
+      return Left(AppError('Something went wrong'));
+    }
+  }
 }
